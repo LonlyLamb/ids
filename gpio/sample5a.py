@@ -1,13 +1,12 @@
 """
-Laspberry Piのpulldown抵抗設定と
+Laspberry Piのpullup抵抗設定と
 スイッチの確認期待値
-pulldownの場合：スイッチを押すとHigh
+pullupの場合：スイッチを押すとLow
 結果
-OK
 
 配線
 スイッチ両端を
-3.3V：1pin
+GND：20pin
 GPIO14：8pin
 へ接続
 """
@@ -20,8 +19,8 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 try:
     while True:
