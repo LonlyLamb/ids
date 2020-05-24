@@ -20,8 +20,8 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 try:
     while True:
@@ -33,6 +33,9 @@ try:
         time.sleep(0.5)
 
 except KeyboardInterrupt:
+    print("Ctrl+Cで停止します")
     pass
 
 GPIO.cleanup()
+print("cleanup end")
+
