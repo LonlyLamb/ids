@@ -1,8 +1,11 @@
 """
 Laspberry Piのpullup、pulldown抵抗設定と
-スイッチの確認
+スイッチの確認期待値
 pulldownの場合：スイッチを押すとHigh
 pullupの場合：スイッチを押すとLow
+結果
+pulldownの場合：OK
+pullupの場合：NG常時High
 が表示される
 
 配線
