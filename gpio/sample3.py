@@ -1,7 +1,9 @@
 import RPi.GPIO as GPIO
 import time
 """
-channelに接続したLEDの明るさを変更する（擬似的アナログ出力）。　
+channelに接続したLEDの明るさを変更する（擬似的アナログ出力）。
+リファクタリング：importされても実行されない
+ように修正予定。
 """
 GPIO.setmode(GPIO.BCM)
 channel = 18

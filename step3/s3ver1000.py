@@ -21,13 +21,8 @@ LED_PIN = 18     # LEDへの出力BCM指定
 
 GPIO.setmode(GPIO.BCM)
 
-# pull_up_down の指定を試すこと
-# 効いているのか否かよくわからない
-# 効いてなさそう  2020.05.19
-GPIO.setup(SENSOR_PIN, GPIO.IN)
-#GPIO.setup(SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#GPIO.setup(SENSOR_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+GPIO.setup(SENSOR_PIN, GPIO.IN)
 
 GPIO.setup(LED_PIN, GPIO.OUT, initial=GPIO.LOW)
 

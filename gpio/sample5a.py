@@ -9,6 +9,10 @@ pullupの場合：スイッチを押すとLow
 GND：20pin
 GPIO14：8pin
 へ接続
+
+リファクタリング：importされても実行されない
+ように修正予定。
+"""
 """
 __author__ = "LonlyLamb<LonlyLamb@gmail.com>"
 __status__ = "test"
