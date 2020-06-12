@@ -7,7 +7,10 @@ GPIO4：7pin
 GND:9pin
 を開放しておく。接続してエッジを発生させる。
 
-終了処理を追加すること。
+終了処理を追加した。
+cb.callback_test()が無いとメインプロセスが終了した状態でcallback処理が
+実行される。callback処理が実行される点では問題ないが、メインプロセスが
+終了しているとKeyboardInterruptが検出、実行されない。
 """
 
 class CallBack:
@@ -35,8 +38,13 @@ class CallBack:
         print("call_back test start")
         while True:
             print("call_back test sleep start")
-            time.sleep(1)
+            time.sleep(3)
             print("call_back test sleep end")
 
-cb = CallBack()
-#cb.callback_test() # 割り込みイベント待ち
+try:
+    cb = CallBack()
+    cb.callback_test()
+except KeyboardInterrupt:
+    print("終了処理中...")
+    GPIO.cleanup()
+    print("GPIO clean完了")

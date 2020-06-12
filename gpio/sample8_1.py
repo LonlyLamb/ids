@@ -6,7 +6,9 @@ GPIO4：7pin
 GND:9pin
 を開放しておく。接続してエッジを発生させる。
 
-終了処理を追加すること。
+2020.06.04 終了処理を追加した。
+しかし、timeout=5000としてあるとKeyboardInterrupt時の処理が
+走るまでに5秒かかることもある。
 """
 
 class CallBack:
@@ -29,5 +31,11 @@ class CallBack:
                 # 割り込みがあったときに実行される
                 print("割り込みあり")
 
-cb = CallBack()
-cb.callback_test()
+try:
+    print("プログラム　スタート")
+    cb = CallBack()
+    cb.callback_test()
+except KeyboardInterrupt:
+    print("終了処理中...")
+    GPIO.cleanup()
+    print("GPIO clean完了")
