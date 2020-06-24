@@ -9,6 +9,9 @@ SENSOR_PIN = 23  # センサーからの入力BCM指定
 LED_PIN = 18     # LEDへの出力BCM指定
                  # BCM18=>pin12
 
+try,except,finallyが機能しない
+cb = CallBack()のみだとそれらしく動くが止め方がわからない
+Cntrl+Cだと停止しない、idleのstopボタンだと停止するようだ
 """
 import RPi.GPIO as GPIO
 import time
@@ -20,7 +23,7 @@ import RPi.GPIO as GPIO
 
 
 #INTERVAL = 3     # 計測間隔
-SLEEPTIME =  7000   # 検出後の待機時間ms
+SLEEPTIME =  3000   # 検出後の待機時間ms
 LEDTIME = 2      # LED点灯時間
 SENSOR_PIN = 23  # センサーからの入力BCM指定
 LED_PIN = 18     # LEDへの出力BCM指定
@@ -43,14 +46,13 @@ class CallBack:
         GPIO.add_event_detect(SENSOR_PIN, GPIO.RISING, bouncetime=SLEEPTIME)
         # コールバック関数登録
         GPIO.add_event_callback(SENSOR_PIN, self.my_callback_print)
-        GPIO.add_event_callback(SENSOR_PIN, self.my_callback_led)
-
-
+        GPIO.add_event_callback( SENSOR_PIN, self.my_callback_led)
 
     def my_callback_print(self, SENSOR_PIN):
         print(datetime.now().strftime('%Y/%m/%d %H:%M:%S') +
         "：" + str("{0:05d}".format(self.cnt)) + "回目の人感知")
         self.cnt += 1
+
 
     def my_callback_led(self, SENSOR_PIN):
         print("LED ON")
@@ -58,22 +60,23 @@ class CallBack:
         time.sleep(LEDTIME)
         GPIO.output(LED_PIN,GPIO.LOW)
         print("LED OFF")
+        
 
 
-#if __name__ == '__main__':
-try:
-    print ("処理キャンセル：CTRL+C")
-    cb = CallBack()
-    while True:
-        print("sleep")
-        time.sleep(10)
-except KeyboardInterrupt:
-    print("終了処理中...")
-    GPIO.remove_event_detect(SENSOR_PIN)
-    GPIO.cleanup()
-    print("GPIO clean完了")
+if __name__ == '__main__':
+    try:
+        print ("処理キャンセル：CTRL+C")
+        cb = CallBack()
+        while True:
+            print("sleep")
+            time.sleep(10)
+            print("sleep end")
+    except KeyboardInterrupt:
+        print("終了処理中...")
+        GPIO.remove_event_detect(SENSOR_PIN)
+        GPIO.cleanup()
+        print("GPIO clean完了")
 # 終了処理
-# KeyboardInterrupt側に持たせたので不要
 """
 finally:
     GPIO.cleanup()

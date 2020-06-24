@@ -3,6 +3,7 @@ import time
 
 """
 超音波距離センサーテストプログラム
+
 file name: sample6_2.py
 超音波距離センサー: HC-SR04
 センサーの端子: Vcc,Trig,Echo,Gnd
@@ -16,6 +17,14 @@ __author__ = "LonlyLamb@gmail.com"
 __status__ = "test"
 __version__ = "1.0.0"
 __date__    = "2020.06.12"
+
+
+# TRIGとECHOのGPIO番号
+TRIG_PIN = 14
+ECHO_PIN = 15
+
+TEMPERATURE = 25
+
 
 
 # HIGH or LOWの時計測
@@ -60,12 +69,6 @@ def calc_sonic_velocity(t):
 
 
 if __name__ == "__main__":
-
-    # TRIGとECHOのGPIO番号
-    TRIG_PIN = 14
-    ECHO_PIN = 15
-
-    TEMPERATURE = 25
 
     # ピン番号をGPIOで指定
     GPIO.setmode(GPIO.BCM)

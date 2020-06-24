@@ -14,16 +14,15 @@ import time
 import RPi.GPIO as GPIO
 
 
-INTERVAL = 3     # 計測間隔
-SLEEPTIME = 7   # 検出後の待機時間
+INTERVAL = 2     # 計測間隔
+SLEEPTIME = 10   # 検出後の待機時間
 SENSOR_PIN = 23  # センサーからの入力BCM指定
 LED_PIN = 18     # LEDへの出力BCM指定
 
+# GPIOの初期設定
+GPIO.cleanup()  #念のためcleanup()を追加
 GPIO.setmode(GPIO.BCM)
-
-
 GPIO.setup(SENSOR_PIN, GPIO.IN)
-
 GPIO.setup(LED_PIN, GPIO.OUT, initial=GPIO.LOW)
 
 if __name__ == '__main__':
@@ -49,5 +48,6 @@ if __name__ == '__main__':
         print("終了処理中...")
     # 終了処理
     finally:
-        GPIO.cleanup()
+        GPIO.cleanup()  #注 finallyは例外が発生した場合もしなかった場合
+                        #も常に最後に行う処理なので、except中に記述不要。
         print("GPIO clean完了")

@@ -36,7 +36,7 @@ if __name__ == '__main__':
         print ("処理キャンセル：CTRL+C")
         cnt = 1
         last_push_time =  time.time()
-        
+
         while True:
             # センサー検出時
             if(GPIO.input(SENSOR_PIN) == GPIO.HIGH):
@@ -48,22 +48,23 @@ if __name__ == '__main__':
                 # PUSH_INTERVAL間は再通知しないように変更した rev_a
                 ss = time.time() - last_push_time
                 print(ss)
-                
+
                 if ss > PUSH_INTERVAL:
-                    push = pb.push_note("RaspberryPi", "人の動きを検知しました")
+                    #push = pb.push_note("RaspberryPi", "人の動きを検知しました")
+                    push =  pb.push_note("RaspberryPi", datetime.now().strftime('%Y/%m/%d %H:%M:%S') +
+                    "：" + str("{0:05d}".format(cnt)) + "回目の人感知")
                     last_push_time = time.time()
-                    
+
                 time.sleep(SLEEPTIME)
                 GPIO.output(LED_PIN,GPIO.LOW)
             # センサー未検出時
             else:
                 print(GPIO.input(SENSOR_PIN))
                 time.sleep(INTERVAL)
-                
+
     except KeyboardInterrupt:
         print("終了処理中...")
     # 終了処理
     finally:
         GPIO.cleanup()
         print("GPIO clean完了")
-

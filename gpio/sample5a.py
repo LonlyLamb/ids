@@ -1,6 +1,8 @@
 """
 Laspberry Piのpullup抵抗設定と
-スイッチの確認期待値
+スイッチの確認
+
+期待値
 pullupの場合：スイッチを押すとLow
 結果
 

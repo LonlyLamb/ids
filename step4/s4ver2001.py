@@ -1,9 +1,10 @@
 """
+赤外線人感センサーHC-SR501を使った
 侵入検知システム  Step3
 
 __author__ = "H.Takeda"
 __status__ = " test"
-__version__ = "2.0.0.0"
+__version__ = "2.0.0.1"
 __date__    = "2020.06.08"
 """
 
@@ -28,7 +29,7 @@ from pushbullet import Pushbullet
 
 INTERVAL = 10    # 計測間隔
 BOUNCE =  3000   # 検出後の待機時間ms
-PUSH_INTERVAL =  180 # pushbullet通知の待機時間
+PUSH_INTERVAL =  1 #180 pushbullet通知の待機時間
 LEDTIME = 2      # LED点灯時間
 SENSOR_PIN = 23  # センサーからの入力BCM指定
 LED_PIN = 18     # LEDへの出力BCM指定
@@ -46,7 +47,7 @@ class CallBack:
 
         # PushbulletのAPIキー設定
         apikey = "o.gpJ6P67e17nBH90711BrCiU1LcR9DUbZ"
-        pb = Pushbullet(apikey)
+        self.pb = Pushbullet(apikey)
 
         GPIO.setmode(GPIO.BCM)
         # SENSOR_PINを入力、プルダウンに設定
@@ -63,7 +64,8 @@ class CallBack:
 
     def my_callback_detect(self, SENSOR_PIN):
 
-        def led(self, SENSOR_PIN):
+
+        def led(LED_PIN):
             print("LED ON")
             GPIO.output(LED_PIN,GPIO.HIGH)
             time.sleep(LEDTIME)
@@ -71,17 +73,24 @@ class CallBack:
             print("LED OFF")
 
 
+
         if time.time() - self.last_time >= INTERVAL:
             print(datetime.now().strftime('%Y/%m/%d %H:%M:%S') +
             "：" + str("{0:05d}".format(self.cnt)) + "回目の人感知")
 
-            led(SENSOR_PIN)
+            led(LED_PIN)
+
 
             # 頻繁なushbulletへの通知はさける
             # PUSH_INTERVAL間は再通知しないようにする
+
+            print(time.time(),self.last_time,PUSH_INTERVAL)
             if time.time() - self.last_push_time >= PUSH_INTERVAL:
-                    push = pb.push_note("RaspberryPi", "人の動きを検知しました")
-                    self.last_push_time = time.time()
+                #push =  self.pb.push_note("RaspberryPi", "人の動きを検知しました")
+                push =  pb.push_note("RaspberryPi", datetime.now().strftime('%Y/%m/%d %H:%M:%S') +
+                "：" + str("{0:05d}".format(cnt)) + "回目の人感知")
+                self.last_push_time = time.time()
+
 
             self.cnt += 1
             self.last_time = time.time()

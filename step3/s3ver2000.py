@@ -8,7 +8,7 @@ __date__    = "2020.06.08"
 """
 
 """
-s3ver2000.py <= sample8_3.pyにインターバルタイム追加
+s3ver2000.py <= クラス化バージョン、sample8_3.pyにインターバルタイム追加
 sample8_3.py <= sample8_2.pyとs3ver1000.py
 を統合
 
@@ -31,9 +31,7 @@ BOUNCE =  3000   # 検出後の待機時間ms
 LEDTIME = 2      # LED点灯時間
 SENSOR_PIN = 23  # センサーからの入力BCM指定
 LED_PIN = 18     # LEDへの出力BCM指定
-"""
 
-"""
 
 class CallBack:
 
@@ -42,6 +40,8 @@ class CallBack:
         self.cnt = 1
         self.last_time = time.time()
 
+        # GPIO初期設定
+        #GPIO.cleanup()
         GPIO.setmode(GPIO.BCM)
         # SENSOR_PINを入力、プルダウンに設定
         GPIO.setup(SENSOR_PIN, GPIO.IN, GPIO.PUD_DOWN)
@@ -54,14 +54,16 @@ class CallBack:
         GPIO.add_event_callback(SENSOR_PIN, self.my_callback_detect)
 
 
-
     def my_callback_detect(self, SENSOR_PIN):
 
-        def led(self, SENSOR_PIN):
+        def led(lpin):
+            """
+            注）ledはクラスのメソッドではなく関数なので引数にselfは不要
+            """
             print("LED ON")
-            GPIO.output(LED_PIN,GPIO.HIGH)
+            GPIO.output(lpin,GPIO.HIGH)
             time.sleep(LEDTIME)
-            GPIO.output(LED_PIN,GPIO.LOW)
+            GPIO.output(lpin,GPIO.LOW)
             print("LED OFF")
 
 
@@ -69,13 +71,10 @@ class CallBack:
             print(datetime.now().strftime('%Y/%m/%d %H:%M:%S') +
             "：" + str("{0:05d}".format(self.cnt)) + "回目の人感知")
 
-            led(SENSOR_PIN)
+            led(LED_PIN)
 
             self.cnt += 1
             self.last_time = time.time()
-
-
-
 
 
 

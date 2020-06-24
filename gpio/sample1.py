@@ -13,6 +13,7 @@ def led():
     channel = 18
     GPIO.setup(channel, GPIO.OUT, initial=GPIO.LOW)
     GPIO.output(channel, GPIO.HIGH)
+    # 10秒間点灯させるためsleepをいれる。
     time.sleep(10)
     GPIO.output(channel, GPIO.LOW)
     GPIO.cleanup()

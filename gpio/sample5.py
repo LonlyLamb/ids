@@ -1,6 +1,8 @@
 """
 Laspberry Piのpulldown抵抗設定と
-スイッチの確認期待値
+スイッチの確認
+
+期待値
 pulldownの場合：スイッチを押すとHigh
 結果
 OK
@@ -23,18 +25,19 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 #GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-try:
-    while True:
-        if GPIO.input(14) == GPIO.HIGH:
-            print("14High")
-        else:
-            print("14Low")
+if __name__ == "__main__":
+    try:
+        while True:
+            if GPIO.input(14) == GPIO.HIGH:
+                print("14High")
+            else:
+                print("14Low")
 
-        time.sleep(0.5)
+            time.sleep(0.5)
 
-except KeyboardInterrupt:
-    print("Ctrl+Cで停止します")
-    pass
+    except KeyboardInterrupt:
+        print("Ctrl+Cで停止します")
+        pass
 
-GPIO.cleanup()
-print("cleanup end")
+    GPIO.cleanup()
+    print("cleanup end")
